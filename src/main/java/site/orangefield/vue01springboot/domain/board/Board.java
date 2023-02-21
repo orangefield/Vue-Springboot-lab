@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -25,4 +24,5 @@ public class Board {
     private String contents;
     private String author;
     private LocalDateTime createdAt;
+
 }
