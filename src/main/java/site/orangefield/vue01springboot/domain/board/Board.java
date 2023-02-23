@@ -24,5 +24,5 @@ public class Board {
     private String contents;
     private String author;
     private LocalDateTime createdAt;
-
+ 
 }

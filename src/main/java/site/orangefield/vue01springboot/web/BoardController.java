@@ -3,6 +3,7 @@ package site.orangefield.vue01springboot.web;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,12 @@ public class BoardController {
     public List<BoardDto> boardList() { 
 
         return boardService.getBoardList();
+    }
+
+    @GetMapping("/board/{id}")
+    public BoardDto getBoard(@PathVariable Integer id) {
+        
+        return boardService.getBoard(id);
     }
 
 }
