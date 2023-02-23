@@ -23,7 +23,7 @@ public class BoardService {
 
     // 게시글 목록 가져오기
     public List<BoardDto> getBoardList() {
-        List<Board> boardsEntity = boardRepository.findAll();
+        List<Board> boardsEntity = boardRepository.findBoardList();
         // System.out.println("게시글 목록 가져옵니까? : " + boardsEntity.size());
 
         List<BoardDto> boardDto = new ArrayList<>();
