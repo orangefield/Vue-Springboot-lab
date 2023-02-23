@@ -1,11 +1,13 @@
 package site.orangefield.vue01springboot.service;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import site.orangefield.vue01springboot.domain.board.Board;
@@ -40,6 +42,7 @@ public class BoardService {
         return boardDto;
     }
 
+    // 게시글 한 건 상세조회
     public BoardDto getBoard(Integer id) {
         Optional<Board> boardOp = boardRepository.findById(id);
         if (boardOp.isPresent()) {
@@ -56,5 +59,18 @@ public class BoardService {
         } else {
             throw new RuntimeException("게시글을 찾을 수 없습니다");
         }
+    }
+
+    // 게시글 쓰기
+    @Transactional
+    public Board writeBoard(BoardDto boardDto) {
+        Board boardEntity = Board.builder()
+                .title(boardDto.getTitle())
+                .contents(boardDto.getContents())
+                .author(boardDto.getAuthor())
+                .createdAt(LocalDateTime.now())
+                .build();
+        
+        return boardRepository.save(boardEntity);
     }
 }
