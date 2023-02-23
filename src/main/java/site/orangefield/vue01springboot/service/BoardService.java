@@ -24,7 +24,7 @@ public class BoardService {
     // 게시글 목록 가져오기
     public List<BoardDto> getBoardList() {
         List<Board> boardsEntity = boardRepository.findAll();
-        System.out.println("게시글 목록 가져옵니까? : " + boardsEntity.size());
+        // System.out.println("게시글 목록 가져옵니까? : " + boardsEntity.size());
 
         List<BoardDto> boardDto = new ArrayList<>();
         for (Board boardEntity : boardsEntity) {
@@ -47,7 +47,7 @@ public class BoardService {
         Optional<Board> boardOp = boardRepository.findById(id);
         if (boardOp.isPresent()) {
             Board boardEntity = boardOp.get();
-            System.out.println("boardEntity가 어떻게 생겼습니까? : " + boardEntity);
+            // System.out.println("boardEntity 상세조회 : " + boardEntity);
 
             return BoardDto.builder()
                     .idx(boardEntity.getIdx())
@@ -70,7 +70,37 @@ public class BoardService {
                 .author(boardDto.getAuthor())
                 .createdAt(LocalDateTime.now())
                 .build();
-        
+
         return boardRepository.save(boardEntity);
     }
+
+    // 게시글 수정하기
+    @Transactional
+    public Board updateBoard(BoardDto boardDto) {
+        Optional<Board> boardOp = boardRepository.findById(boardDto.getIdx());
+        if (boardOp.isPresent()) {
+            Board boardEntity = boardOp.get();
+            // System.out.println("boardEntity 수정 : " + boardEntity);
+
+            boardEntity.setTitle(boardDto.getTitle());
+            boardEntity.setContents(boardDto.getContents());
+            
+            return boardRepository.save(boardEntity);
+        } else {
+            throw new RuntimeException("게시글을 찾을 수 없습니다");
+        }
+    }
+
+    // 게시글 삭제하기
+    @Transactional
+    public void deleteBoard(Integer id){
+        Optional<Board> boardOp = boardRepository.findById(id);
+        if(boardOp.isPresent()) {
+            Board boardEntity = boardOp.get();
+            // System.out.println("boardEntity 삭제 : " + boardEntity);
+
+            boardRepository.delete(boardEntity);
+        }
+    }
+
 }
