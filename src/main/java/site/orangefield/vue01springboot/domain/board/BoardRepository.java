@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface BoardRepository extends JpaRepository<Board, Integer>{
     
-    @Query(value = "SELECT * FROM board ORDER BY idx", nativeQuery = true)
+    @Query(value = "SELECT * FROM board ORDER BY createdat DESC", nativeQuery = true)
     List<Board> findBoardList();
 }
